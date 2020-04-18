@@ -3,10 +3,8 @@ package com.sjl.springcloud.controller;
 import com.sjl.springcloud.entities.CommonResult;
 import com.sjl.springcloud.entities.Payment;
 import com.sjl.springcloud.service.PaymentService;
-import com.sjl.springcloud.service.impl.PaymentServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
