@@ -1,0 +1,43 @@
+server:
+  port: 9527
+spring:
+  application:
+    name: cloud-gateway9527
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true #开启从注册中心动态创建路由的功能，利用微服务名进行路由
+      routes:
+        - id: payment_routh1          # 路由id
+          #uri: http://localhost:8001  # 真实调用地址
+          uri: lb://CLOUD-PAYMENT-SERVICE
+          predicates:
+            - Path=/payment/get/**   # 断言，符合规则进行路由
+        - id: payment_routh2
+          #uri: http://localhost:8001
+          uri: lb://CLOUD-PAYMENT-SERVICE
+          predicates:
+            - Path=/payment/lb/**
+            #- After=2020-04-25T16:30:58.215+08:00[Asia/Shanghai]
+            #- Before=2020-04-25T16:40:58.215+08:00[Asia/Shanghai]
+            #- Between=2020-04-25T16:35:58.215+08:00[Asia/Shanghai],2020-04-25T16:40:58.215+08:00[Asia/Shanghai]
+            #- Cookie=id, [0-9]
+            #- Header=h, [a-h]
+            #- Host=**.a.com,**.b.cn
+            #- Method=GET
+            #- Query=name, zhangsan
+
+        - id: news
+          uri: http://news.baidu.com
+          predicates:
+            - Path=/guonei
+
+eureka:
+  instance:
+    hostname: cloud-gateway-service
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka
