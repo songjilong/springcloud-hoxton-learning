@@ -1,0 +1,25 @@
+server:
+  port: 3344
+spring:
+  application:
+    name: cloud-config-center
+  cloud:
+    config:
+      server:
+        git:
+          # 远程库地址
+          uri: https://github.com/songjilong/springcloud-config.git
+          username: songjilong
+          password: 0611sjl....
+          # 搜索目录
+          search-paths:
+            - springcloud-config
+      # 读取分支
+      label: master
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka

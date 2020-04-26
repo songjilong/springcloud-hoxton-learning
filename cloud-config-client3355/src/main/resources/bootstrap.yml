@@ -1,0 +1,24 @@
+server:
+  port: 3355
+spring:
+  application:
+    name: cloud-config-client
+  cloud:
+    config:
+      label: master #分支名
+      name: config #配置文件名
+      profile: dev #配置文件后缀
+      uri: http://config3344.com:3344
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka
+
+# 暴露监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
