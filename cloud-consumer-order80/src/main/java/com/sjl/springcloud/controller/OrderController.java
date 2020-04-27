@@ -46,23 +46,28 @@ public class OrderController {
     }
 
     @GetMapping("/consumer/payment/getEntity/{id}")
-    public CommonResult<Payment> getPaymentById2(@PathVariable("id") Long id){
+    public CommonResult<Payment> getPaymentById2(@PathVariable("id") Long id) {
         ResponseEntity<CommonResult> entity = restTemplate.getForEntity(PAYMENT_URL + "/payment/get/" + id, CommonResult.class);
-        if(entity.getStatusCode().is2xxSuccessful()){
+        if (entity.getStatusCode().is2xxSuccessful()) {
             return entity.getBody();
-        }else{
+        } else {
             return new CommonResult<>(444, "出错了");
         }
     }
 
     @GetMapping("/consumer/payment/lb")
-    public String roundLb(){
+    public String roundLb() {
         List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");
-        if (instances == null || instances.size() <= 0){
+        if (instances == null || instances.size() <= 0) {
             return null;
         }
         ServiceInstance instance = loadBalancer.getInstance(instances);
         URI uri = instance.getUri();
         return restTemplate.getForObject(uri + "/payment/lb", String.class);
+    }
+
+    @GetMapping("/consumer/payment/zipkin")
+    public String paymentZipkin() {
+        return restTemplate.getForObject("http://localhost:8001/payment/zipkin", String.class);
     }
 }
